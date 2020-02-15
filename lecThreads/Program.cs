@@ -11,16 +11,18 @@ namespace lecThreads
     {
         static void Main(string[] args)
         {
-            Thread thread = new Thread(() => Console.WriteLine(Do("first thread id in Do method")) );
-            thread.Start();
+            Thread thread1 = new Thread(() => Console.WriteLine(Do("first thread id in Do method")) );
+            thread1.IsBackground = true;
+            thread1.Start();
 
-            thread = new Thread(() => Console.WriteLine(Do("second thread id in Do method")));
-            thread.Start();
+            Thread thread2 = new Thread(() => Console.WriteLine(Do("second thread id in Do method")));
+            thread2.IsBackground = true;
+            thread2.Start();
 
-            thread.Join();
-            Do("Main thread id in Do method");
-          //  Console.WriteLine($"Main thread id {Thread.CurrentThread.ManagedThreadId}");
-            Console.ReadLine();
+            Thread.Sleep(2000);
+            //Do("Main thread id in Do method");
+          Console.WriteLine($"Main thread id {Thread.CurrentThread.ManagedThreadId}");
+            
         }
         private static int Do(object data)
         {
@@ -28,7 +30,7 @@ namespace lecThreads
             for (int i = 0; i < 10; i++)
             {
                 Console.WriteLine($"{message} {Thread.CurrentThread.ManagedThreadId} - {DateTime.Now}");
-                Thread.Sleep(100);
+                Thread.Sleep(1000);
             }
             return Thread.CurrentThread.ManagedThreadId;
         }
